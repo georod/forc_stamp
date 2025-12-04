@@ -169,9 +169,15 @@ globalP1 <- data.frame("nrow_t1"=nrow(polyL[[1]]), "nrow_t2"=nrow(polyL[[2]]), "
 globalP2 <- data.frame("nrow_t1"=nrow(polyL[[2]]), "nrow_t2"=nrow(polyL[[3]]), "area_t1"= sum(sf::st_area(polyL[[2]])), "area_t2"=sum(sf::st_area(polyL[[3]])))
 globalP3 <- data.frame("nrow_t1"=nrow(polyL[[3]]), "nrow_t2"=nrow(polyL[[4]]), "area_t1"= sum(sf::st_area(polyL[[3]])), "area_t2"=sum(sf::st_area(polyL[[4]])))
 
+# globalAll <- rbind(globalP1,globalP2,globalP3) 
+# globalAll$NumRatio <- (globalAll$nrow_t1/globalAll$nrow_t2)          
+# globalAll$AreaRatio <- as.numeric(globalAll$area_t1/globalAll$area_t2)
+# globalAll$AvgAreaRatio <- as.numeric(globalAll$AreaRatio/globalAll$NumRatio)
+# globalAll$label <- c("1 vs. 2", "2 vs. 3", "3 vs. 4")
+
 globalAll <- rbind(globalP1,globalP2,globalP3) 
-globalAll$NumRatio <- (globalAll$nrow_t1/globalAll$nrow_t2)          
-globalAll$AreaRatio <- as.numeric(globalAll$area_t1/globalAll$area_t2)
+globalAll$NumRatio <- (globalAll$nrow_t2/globalAll$nrow_t1)          
+globalAll$AreaRatio <- as.numeric(globalAll$area_t2/globalAll$area_t1)
 globalAll$AvgAreaRatio <- as.numeric(globalAll$AreaRatio/globalAll$NumRatio)
 globalAll$label <- c("1 vs. 2", "2 vs. 3", "3 vs. 4")
 
@@ -207,7 +213,7 @@ globalAll$label <- c("1 vs. 2", "2 vs. 3", "3 vs. 4")
  # Greening colour used in QGIS
  ggplot(globalAllLong, aes(x=label, y=value))+
    geom_bar(stat='identity', fill="#418a1c") +
-   facet_wrap(~measure2)   + ylab("Ratio") + xlab("Period comparison, Greening") #+  theme_bw()
+   facet_wrap(~measure2)   + ylab("Ratio") + xlab("Period comparison, Greening") +  theme_bw()
 
  dev.off()
  
@@ -227,13 +233,13 @@ globalAll$label <- c("1 vs. 2", "2 vs. 3", "3 vs. 4")
  # Browning colour used in QGIS
  ggplot(globalAllLong, aes(x=label, y=value))+
    geom_bar(stat='identity', fill="#b96216") +
-   facet_wrap(~measure2)   + ylab("Ratio") + xlab("Period comparison, Browning") #+  theme_bw()
+   facet_wrap(~measure2)   + ylab("Ratio") + xlab("Period comparison, Browning") +  theme_bw()
  
  dev.off()
  
  
  #-------------------------------------------------------
- # Greening and browning side by side
+ # Greening and browning side by side -- Code below not run
  
  #proj1 <- "+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +R=6371007.181 +units=m +no_defs +type=crs" 
  #sf::st_area(st_transform(st_read(shp1), proj1))
